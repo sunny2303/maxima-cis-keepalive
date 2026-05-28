@@ -1,0 +1,11 @@
+{
+  "name": "maxima-cis-keepalive",
+  "version": "1.0.0",
+  "description": "Keeps Maxima Streamlit apps awake via headless browser pings",
+  "scripts": {
+    "start": "node keep_alive.js"
+  },
+  "dependencies": {
+    "playwright": "^1.44.0"
+  }
+}

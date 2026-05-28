@@ -1,0 +1,22 @@
+name: Keep Maxima apps awake
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm i playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Wake apps
+        env:
+          URLS: https://maxima-cis-live.streamlit.app,https://maxima-nse-acopening.streamlit.app
+        run: node keep_alive.js
