@@ -20,3 +20,12 @@ jobs:
         env:
           URLS: https://maxima-cis-live.streamlit.app,https://maxima-nse-acopening.streamlit.app
         run: node keep_alive.js
+      - name: Ping Supabase (prevent auto-pause)
+        env:
+          SUPABASE_URL: https://dxmiycgligwwrkpcpblt.supabase.co
+          SUPABASE_KEY: ${{ secrets.SUPABASE_PROD_SERVICE_KEY }}
+        run: |
+          curl -sf -o /dev/null -w "Supabase ping: HTTP %{http_code}\n" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY" \
+            "$SUPABASE_URL/rest/v1/partners?select=partner_id&limit=1"
