@@ -17,7 +17,10 @@ const urls = (process.env.URLS || 'https://maxima-cis-live.streamlit.app')
           await wake.click();
           await page.waitForLoadState('domcontentloaded', { timeout: 60000 });
         }
-      } catch { console.log('  already awake'); }
+      } catch (e) {
+        if (e.name === 'TimeoutError') console.log('  already awake');
+        else throw e;
+      }
       await page.waitForTimeout(15000);
       console.log('  session registered');
     } catch (e) {
